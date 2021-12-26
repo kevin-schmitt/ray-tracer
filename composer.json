@@ -1,5 +1,21 @@
 {
+    "name": "kevin/ray-tracer",
+    "description": "bdd implementation for 3d rendering",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "RayTracer\\": "src/"
+        }
+    },
     "require-dev": {
         "behat/behat": "^3.10"
-    }
+    },
+    "authors": [
+        {
+            "name": "kevins chmitt",
+            "email": "kevin.schmitt.upjv@gmail.com"
+        }
+    ],
+    "require": {}
 }
