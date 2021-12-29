@@ -1,16 +1,21 @@
 <?php
 
+namespace RayTracer\Tests;
+
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use RayTracer\Array\ArrayOperation;
 use RayTracer\Array\ArrayOperationInterface;
+use RayTracer\Tests\ArrayHelperTrait;
 
 /**
  * Defines application features from the specific context.
  */
 class ArrayContext implements Context
 {
+    use ArrayHelperTrait;
+
     private ArrayOperationInterface $arrayOperation;
     private array $arg1;
     private array $arg2;
@@ -56,8 +61,5 @@ class ArrayContext implements Context
         }
     }
 
-    private function stringToArray(string $param) : array
-    {
-        return array_map('trim', explode(',', $param));
-    }
+ 
 }

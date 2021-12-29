@@ -2,4 +2,5 @@ default:
     suites:
         default:
             contexts:
-                - ArrayContext
+                - RayTracer\Tests\ArrayContext
+                - RayTracer\Tests\TupleContext
