@@ -18,5 +18,8 @@
             "email": "kevin.schmitt.upjv@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "beberlei/assert": "^2.9",
+        "symfony/var-dumper": "^6.0"
+    }
 }
