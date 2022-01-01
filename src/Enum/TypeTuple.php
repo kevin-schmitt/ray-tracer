@@ -3,11 +3,18 @@
 namespace RayTracer\Enum;
  
 final class TypeTuple {
-    const VECTOR = 'vector';
-    const POINT = 'point';
+    const VECTOR = 0.0;
+    const VECTOR_LABEL = 'vector';
+    const POINT = 1.0;
+    const POINT_LABEL = 'point';
 
-    const TYPES = [
-        0.0 => self::VECTOR,
-        1.0 => self::POINT
-    ];
+    public static function getTypeByValue(float $value) : string
+    {
+        if($value === self::VECTOR) {
+            return self::VECTOR_LABEL;
+        }
+        if($value === self::POINT) {
+            return self::POINT_LABEL;
+        }
+    }
 }

@@ -6,6 +6,7 @@ use Assert\Assertion;
 use Behat\Behat\Context\Context;
 use RayTracer\Model\TupleInterface;
 use RayTracer\Model\Tuple;
+use RayTracer\Model\TupleFactory;
 use RayTracer\Tests\Context\ArrayHelperTrait;
 
 /**
@@ -89,4 +90,36 @@ class TupleContext implements Context
     {
         Assertion::notEq($this->tuple->getType(), 'point');
     }
+
+      /**
+     * @Given p <- point(:tuple)
+     */
+    public function pPoint($tuple)
+    {
+        $tupleArray = $this->stringToArrayFloat($tuple);
+        $this->tuple = TupleFactory::point(...$tupleArray);
+    }
+
+    /**
+     * @Given p <- vector(:tuple)
+     */
+    public function pVector($tuple)
+    {
+        $tupleArray = $this->stringToArrayFloat($tuple);
+        $this->tuple = TupleFactory::vector(...$tupleArray);
+    }
+
+    /**
+     * @Then p = tuple(:arg1)
+     */
+    public function pTuple($tuple)
+    {
+        $tupleArray = $this->stringToArrayFloat($tuple);
+        Assertion::eq($this->tuple->getX(), $tupleArray[0]);
+        Assertion::eq($this->tuple->getY(), $tupleArray[1]);
+        Assertion::eq($this->tuple->getZ(), $tupleArray[2]);
+        Assertion::eq($this->tuple->getW(), $tupleArray[3]);
+    }
+
+
 }

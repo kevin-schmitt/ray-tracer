@@ -29,6 +29,6 @@ class Tuple implements TupleInterface {
 	} 
 
 	function getType() : string { 
- 		return TypeTuple::TYPES[$this->w]; 
+ 		return TypeTuple::getTypeByValue($this->w); 
 	} 
 }
