@@ -73,4 +73,20 @@ class TupleContext implements Context
     {
         Assertion::notEq($this->tuple->getType(), 'vector');
     }
+
+    /**
+     * @Then a is a vector
+     */
+    public function aIsAVector()
+    {
+        Assertion::eq($this->tuple->getType(), 'vector');
+    }
+
+    /**
+     * @Then a is not a point
+     */
+    public function aIsNotAPoint()
+    {
+        Assertion::notEq($this->tuple->getType(), 'point');
+    }
 }
