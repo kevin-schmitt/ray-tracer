@@ -2,27 +2,23 @@
 
 namespace RayTracer\Tests\Context;
 
+use Assert\Assertion;
 use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-use RayTracer\Array\ArrayOperation;
-use RayTracer\Array\ArrayOperationInterface;
+use RayTracer\Array\ArrayConcatenation;
+use RayTracer\Array\ArrayConcatenationInterface;
 use RayTracer\Tests\Context\ArrayHelperTrait;
 
 /**
  * Defines application features from the specific context.
  */
-class ArrayContext implements Context
+class ArrayConcatenationContext implements Context
 {
     use ArrayHelperTrait;
 
-    private ArrayOperationInterface $arrayOperation;
-    private array $arg1;
-    private array $arg2;
-    private array $result;
+    private ArrayConcatenationInterface $arrayConcatenation;
 
     public function __construct() {
-        $this->arrayOperation = new ArrayOperation();
+        $this->arrayConcatenation = new ArrayConcatenation();
     }
 
      /**
@@ -30,7 +26,7 @@ class ArrayContext implements Context
      */
     public function aArray($arg1)
     {
-        $this->arg1 = $this->stringToArray($arg1);
+        $this->arrayConcatenation->add($this->stringToArray($arg1));
     }
 
     /**
@@ -38,7 +34,7 @@ class ArrayContext implements Context
      */
     public function bArray($arg1)
     {
-        $this->arg2 = $this->stringToArray($arg1);
+        $this->arrayConcatenation->add($this->stringToArray($arg1));
     }
 
     /**
@@ -46,8 +42,6 @@ class ArrayContext implements Context
      */
     public function cAB()
     {
-       $this->result = array_merge($this->arg1, $this->arg2);
-
     }
 
     /**
@@ -56,9 +50,7 @@ class ArrayContext implements Context
     public function cArray($arg1)
     {
         $arg1 = $this->stringToArray($arg1);
-        if($arg1 !== $this->result) {
-            throw new \Exception('Not equals');
-        }
+        Assertion::eq($arg1, $this->arrayConcatenation->concat());
     }
 
  

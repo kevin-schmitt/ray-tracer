@@ -2,5 +2,5 @@
 
 namespace RayTracer\Array;
 
-interface ArrayOperationInterface 
+interface ArrayInterface 
 {}
