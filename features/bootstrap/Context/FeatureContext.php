@@ -1,6 +1,6 @@
 <?php
 
-namespace RayTracer\Tests;
+namespace RayTracer\Tests\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;

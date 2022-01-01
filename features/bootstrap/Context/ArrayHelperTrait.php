@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace RayTracer\Tests;
+namespace RayTracer\Tests\Context;
 
 
 trait ArrayHelperTrait {

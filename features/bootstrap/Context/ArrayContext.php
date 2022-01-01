@@ -1,13 +1,13 @@
 <?php
 
-namespace RayTracer\Tests;
+namespace RayTracer\Tests\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use RayTracer\Array\ArrayOperation;
 use RayTracer\Array\ArrayOperationInterface;
-use RayTracer\Tests\ArrayHelperTrait;
+use RayTracer\Tests\Context\ArrayHelperTrait;
 
 /**
  * Defines application features from the specific context.

@@ -1,12 +1,12 @@
 <?php
 
-namespace RayTracer\Tests;
+namespace RayTracer\Tests\Context;
 
 use Assert\Assertion;
 use Behat\Behat\Context\Context;
 use RayTracer\Model\TupleInterface;
 use RayTracer\Model\Tuple;
-use RayTracer\Tests\ArrayHelperTrait;
+use RayTracer\Tests\Context\ArrayHelperTrait;
 
 /**
  * Defines application features from the specific context.
