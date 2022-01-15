@@ -4,14 +4,23 @@ namespace RayTracer\Array;
 
 class ArrayConcatenation implements ArrayConcatenationInterface
 {
+    /**
+     * @var array<array<string|int>>
+     */
     private array $listArray = [];
 
-    public function add(array $array) : void 
+    /**
+     * @override
+     */
+    public function add(array $array): void
     {
         $this->listArray[] = $array;
     }
 
-    public function concat() : array
+    /**
+     * @override
+     */
+    public function concat(): array
     {
         return array_merge(...$this->listArray);
     }

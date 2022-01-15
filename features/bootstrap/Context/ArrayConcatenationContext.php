@@ -6,7 +6,6 @@ use Assert\Assertion;
 use Behat\Behat\Context\Context;
 use RayTracer\Array\ArrayConcatenation;
 use RayTracer\Array\ArrayConcatenationInterface;
-use RayTracer\Tests\Context\ArrayHelperTrait;
 
 /**
  * Defines application features from the specific context.
@@ -17,11 +16,12 @@ class ArrayConcatenationContext implements Context
 
     private ArrayConcatenationInterface $arrayConcatenation;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->arrayConcatenation = new ArrayConcatenation();
     }
 
-     /**
+    /**
      * @Given a <- array(:arg1)
      */
     public function aArray($arg1)
@@ -52,6 +52,4 @@ class ArrayConcatenationContext implements Context
         $arg1 = $this->stringToArray($arg1);
         Assertion::eq($arg1, $this->arrayConcatenation->concat());
     }
-
- 
 }

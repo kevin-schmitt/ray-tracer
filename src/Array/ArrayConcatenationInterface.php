@@ -2,8 +2,15 @@
 
 namespace RayTracer\Array;
 
-interface ArrayConcatenationInterface extends ArrayInterface 
+interface ArrayConcatenationInterface extends ArrayInterface
 {
-    public function add(array $array) : void;
-    public function concat() : array;
+    /**
+     * @param array<string|int> $array
+     */
+    public function add(array $array): void;
+
+    /**
+     * @return array<int|string>
+     */
+    public function concat(): array;
 }
