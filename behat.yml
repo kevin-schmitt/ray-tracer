@@ -4,3 +4,4 @@ default:
             contexts:
                 - RayTracer\Tests\Context\ArrayConcatenationContext
                 - RayTracer\Tests\Context\TupleContext
+                - RayTracer\Tests\Context\CanvasContext

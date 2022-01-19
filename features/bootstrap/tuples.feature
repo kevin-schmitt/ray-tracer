@@ -96,3 +96,28 @@ Feature: Tuples
         And b <- vector("2, 3, 4")
         Then cross for a, b = vector("-1, -1, 2")
         And cross for b, a = vector("1, 1, -2")
+
+    Scenario: The color are (red, green, blue)
+        Given c = color("-0.5, 0.4, 1.7")
+        Then c.red = -0.5
+        And c.green = 0.4
+        And c.blue = 1.7
+
+    Scenario: Adding colors
+        Given c1 = color("0.9, 0.6, 0.75")
+        And c2 = color("0.7, 0.1, 0.25")
+        Then c1 + c2 = ("1.6, 0.7, 1")
+
+    Scenario: Substrating colors
+        Given c1 = color("0.9, 0.6, 0.75")
+        And c2 = color("0.7, 0.1, 0.25")
+        Then c1 - c2 = ("0.2, 0.5, 0.5")
+
+    Scenario: Multiplying colors
+        Given c = color("0.9, 0.6, 0.75")
+        Then c * 2 = ("1.8, 1.2, 1.5")
+
+    Scenario: Multiplying colors
+        Given c1 = color("0.9, 1, 0.4")
+        And c2 = color("1, 0.1, 0.1")
+        Then c1 * c2 = ("0.9, 0.1, 0.04")
