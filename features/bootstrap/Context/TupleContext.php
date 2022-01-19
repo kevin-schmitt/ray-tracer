@@ -5,6 +5,8 @@ namespace RayTracer\Tests\Context;
 use Assert\Assertion;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use RayTracer\Color\Color;
+use RayTracer\Color\ColorCalculator;
 use RayTracer\Model\Tuple;
 use RayTracer\Model\TupleFactory;
 use RayTracer\Model\TupleInterface;
@@ -18,6 +20,10 @@ class TupleContext implements Context
     use ArrayHelperTrait;
     private TupleInterface $tuple;
     private TupleInterface $tuple2;
+    /**
+     * @var array<Color>
+     */
+    private array $colors;
 
     /**
      * @Given a <- Tuples(:tuples)
@@ -316,5 +322,102 @@ class TupleContext implements Context
         Assertion::same(true, Comparator::float($tupleArray[0], $vectorCrossed->getX()));
         Assertion::same(true, Comparator::float($tupleArray[1], $vectorCrossed->getY()));
         Assertion::same(true, Comparator::float($tupleArray[2], $vectorCrossed->getZ()));
+    }
+
+    /**
+     * @Given c = color(:colors)
+     * @Given c1 = color(:arg1)
+     * @Given c2 = color(:arg1)
+     */
+    public function color(string $colors)
+    {
+        $this->colors[] = new Color(...$this->stringToArray($colors));
+    }
+
+    /**
+     * @Then c.red = :color
+     */
+    public function cRed($color)
+    {
+        Assertion::eq($this->colors[0]->getRed(), $color);
+    }
+
+    /**
+     * @Then c.green = :color
+     */
+    public function cGreen($color)
+    {
+        Assertion::eq($this->colors[0]->getGreen(), $color);
+    }
+
+    /**
+     * @Then c.blue = :color
+     */
+    public function cBlue($color)
+    {
+        Assertion::eq($this->colors[0]->getBlue(), $color);
+    }
+
+    /**
+     * @Then c1 + c2 = (:color)
+     */
+    public function addingColor($colorExcepted)
+    {
+        $c1 = $this->colors[0];
+        $c2 = $this->colors[1];
+
+        $color = (new ColorCalculator())->adding($c1, $c2);
+        $colorExcepted = $this->stringToArray($colorExcepted);
+
+        Assertion::same(true, Comparator::float($colorExcepted[0], $color->getRed()));
+        Assertion::same(true, Comparator::float($colorExcepted[1], $color->getGreen()));
+        Assertion::same(true, Comparator::float($colorExcepted[2], $color->getBlue()));
+    }
+
+    /**
+     * @Then c1 - c2 = (:color)
+     */
+    public function cC2($colorExcepted)
+    {
+        $c1 = $this->colors[0];
+        $c2 = $this->colors[1];
+
+        $color = (new ColorCalculator())->substrating($c1, $c2);
+        $colorExcepted = $this->stringToArray($colorExcepted);
+
+        Assertion::same(true, Comparator::float($colorExcepted[0], $color->getRed()));
+        Assertion::same(true, Comparator::float($colorExcepted[1], $color->getGreen()));
+        Assertion::same(true, Comparator::float($colorExcepted[2], $color->getBlue()));
+    }
+
+    /**
+     * @Then c * :coef = (:colorExcepted)
+     */
+    public function c($coef, $colorExcepted)
+    {
+        $c1 = $this->colors[0];
+
+        $color = (new ColorCalculator())->multipliyingByCoef($c1, floatval($coef));
+        $colorExcepted = $this->stringToArray($colorExcepted);
+
+        Assertion::same(true, Comparator::float($colorExcepted[0], $color->getRed()));
+        Assertion::same(true, Comparator::float($colorExcepted[1], $color->getGreen()));
+        Assertion::same(true, Comparator::float($colorExcepted[2], $color->getBlue()));
+    }
+
+    /**
+     * @Then c1 * c2 = (:color)
+     */
+    public function cC($colorExcepted)
+    {
+        $c1 = $this->colors[0];
+        $c2 = $this->colors[1];
+
+        $color = (new ColorCalculator())->multipliyingByColor($c1, $c2);
+        $colorExcepted = $this->stringToArray($colorExcepted);
+
+        Assertion::same(true, Comparator::float($colorExcepted[0], $color->getRed()));
+        Assertion::same(true, Comparator::float($colorExcepted[1], $color->getGreen()));
+        Assertion::same(true, Comparator::float($colorExcepted[2], $color->getBlue()));
     }
 }
