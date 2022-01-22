@@ -120,4 +120,9 @@ class Tuple implements TupleInterface
             TypeTuple::VECTOR
         );
     }
+
+    public static function from(float $x, float $y, float $z, float $w): self
+    {
+        return new self($x, $y, $z, $w);
+    }
 }

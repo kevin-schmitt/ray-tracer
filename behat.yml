@@ -5,3 +5,4 @@ default:
                 - RayTracer\Tests\Context\ArrayConcatenationContext
                 - RayTracer\Tests\Context\TupleContext
                 - RayTracer\Tests\Context\CanvasContext
+                - RayTracer\Tests\Context\MatriceContext

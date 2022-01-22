@@ -17,4 +17,11 @@ trait ArrayHelperTrait
             return floatval(trim($value));
         }, explode(',', $valueWithComaSeparator));
     }
+
+    private function stringToArrayInt(string $valueWithComaSeparator): array
+    {
+        return array_map(function (string $value) {
+            return intval(trim($value));
+        }, explode(',', $valueWithComaSeparator));
+    }
 }
