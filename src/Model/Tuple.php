@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace RayTracer\Model;
 
 use RayTracer\Enum\TypeTuple;
+use RayTracer\Utils\Comparator;
 
 class Tuple implements TupleInterface
 {
@@ -124,5 +125,22 @@ class Tuple implements TupleInterface
     public static function from(float $x, float $y, float $z, float $w): self
     {
         return new self($x, $y, $z, $w);
+    }
+
+    public function equalTo(TupleInterface $that): bool
+    {
+        if (false === Comparator::float($this->x, $that->getX())) {
+            return false;
+        }
+
+        if (false === Comparator::float($this->y, $that->getY())) {
+            return false;
+        }
+
+        if (false === Comparator::float($this->z, $that->getZ())) {
+            return false;
+        }
+
+        return true;
     }
 }

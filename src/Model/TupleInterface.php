@@ -31,4 +31,6 @@ interface TupleInterface
     public function dot(TupleInterface $tuple): float;
 
     public function cross(TupleInterface $tuple): TupleInterface;
+
+    public function equalTo(self $that): bool;
 }
