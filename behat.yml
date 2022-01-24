@@ -6,3 +6,4 @@ default:
                 - RayTracer\Tests\Context\TupleContext
                 - RayTracer\Tests\Context\CanvasContext
                 - RayTracer\Tests\Context\MatriceContext
+                - RayTracer\Tests\Context\TransformationContext
