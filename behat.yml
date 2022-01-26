@@ -7,3 +7,4 @@ default:
                 - RayTracer\Tests\Context\CanvasContext
                 - RayTracer\Tests\Context\MatriceContext
                 - RayTracer\Tests\Context\TransformationContext
+                - RayTracer\Tests\Context\RayContext
