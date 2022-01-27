@@ -8,3 +8,14 @@ default:
                 - RayTracer\Tests\Context\MatriceContext
                 - RayTracer\Tests\Context\TransformationContext
                 - RayTracer\Tests\Context\RayContext
+    extensions:
+        DVDoug\Behat\CodeCoverage\Extension:
+            filter:
+                include:
+                    directories:
+                        'src': ~
+            reports:
+                html:
+                    target: build/coverage-behat
+                text:
+                    showColors: true

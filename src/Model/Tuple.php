@@ -6,6 +6,7 @@ namespace RayTracer\Model;
 
 use RayTracer\Enum\TypeTuple;
 use RayTracer\Utils\Comparator;
+use RuntimeException;
 
 class Tuple implements TupleInterface
 {
@@ -66,12 +67,14 @@ class Tuple implements TupleInterface
         $this->w = -$this->w;
     }
 
-    public function multiplyBy(float $coef): void
+    public function multiplyBy(float $factor): self
     {
-        $this->x *= $coef;
-        $this->y *= $coef;
-        $this->z *= $coef;
-        $this->w *= $coef;
+        return new self(
+            $factor * $this->x,
+            $factor * $this->y,
+            $factor * $this->z,
+            $factor * $this->w
+        );
     }
 
     public function dividingBy(float $coef): void
@@ -143,4 +146,26 @@ class Tuple implements TupleInterface
 
         return true;
     }
+
+    public function plus(self $that): self
+    {
+        if ($this->isPoint() && $that->isPoint()) {
+            throw new RuntimeException(
+                'Cannot add point tuple to another point tuple'
+            );
+        }
+
+        return new self(
+            $this->x + $that->getX(),
+            $this->y + $that->getY(),
+            $this->z + $that->getZ(),
+            $this->w + $that->getW()
+        );
+    }
+
+    public function isPoint(): bool
+    {
+        return $this->w === 1.0;
+    }
+
 }

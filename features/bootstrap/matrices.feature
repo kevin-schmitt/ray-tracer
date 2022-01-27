@@ -121,7 +121,7 @@ Feature: Matrices
             | 0  | 1  |
             | 1  | 5  |
             | -3 | 2  |
-        Then determinant = 17
+        Then determinant(A) = 17
 
     Scenario: A submatrix of a 3x3 matrix is a 2x2 matrix
         Given the following matrix A:

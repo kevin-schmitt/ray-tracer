@@ -38,4 +38,12 @@ final class Ray
    {
        return $this->direction;
    }
+
+    /**
+     * @throws RuntimeException
+    */
+   public function position(float $position) : Tuple
+   {
+       return $this->origin->plus($this->direction->multiplyBy($position));
+   }
 }
