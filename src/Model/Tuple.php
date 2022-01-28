@@ -150,9 +150,7 @@ class Tuple implements TupleInterface
     public function plus(self $that): self
     {
         if ($this->isPoint() && $that->isPoint()) {
-            throw new RuntimeException(
-                'Cannot add point tuple to another point tuple'
-            );
+            throw new RuntimeException('Cannot add point tuple to another point tuple');
         }
 
         return new self(
@@ -165,7 +163,25 @@ class Tuple implements TupleInterface
 
     public function isPoint(): bool
     {
-        return $this->w === 1.0;
+        return 1.0 === $this->w;
     }
 
+    public function isVector(): bool
+    {
+        return 0.0 === $this->w;
+    }
+
+    public function minus(self $that): self
+    {
+        if ($this->isVector() && $that->isPoint()) {
+            throw new RuntimeException('Cannot subtract point tuple from a vector tuple');
+        }
+
+        return new self(
+            $this->x - $that->getX(),
+            $this->y - $that->getY(),
+            $this->z - $that->getZ(),
+            $this->w - $that->getW()
+        );
+    }
 }

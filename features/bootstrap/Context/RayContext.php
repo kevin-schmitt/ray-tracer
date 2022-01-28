@@ -75,8 +75,7 @@ class RayContext implements Context
      */
     public function rayInitialisation(
         float $pointX, float $pointY, float $pointZ, float $vectorX, float $vectorY, float $vectorZ
-    )
-    {
+    ) {
         $this->rays[] = Ray::from(
             Tuple::from($pointX, $pointY, $pointZ, TypeTuple::POINT),
             Tuple::from($vectorX, $vectorY, $vectorZ, TypeTuple::VECTOR)
@@ -89,7 +88,7 @@ class RayContext implements Context
     public function positionOfRayEqualTo(float $position, float $x, float $y, float $z)
     {
         $point = Tuple::from($x, $y, $z, TypeTuple::POINT);
-        if($this->rays[0]->position($position)->equalTo($point) === false) {
+        if (false === $this->rays[0]->position($position)->equalTo($point)) {
             var_dump($this->rays[0]->position($position), $point);
         }
         Assertion::true($this->rays[0]->position($position)->equalTo($point));

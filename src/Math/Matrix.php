@@ -6,7 +6,6 @@ namespace RayTracer\Math;
 
 use Behat\Gherkin\Node\TableNode;
 use RayTracer\Model\Tuple;
-use RayTracer\Model\TupleInterface;
 use RayTracer\Utils\Comparator;
 use RuntimeException;
 
@@ -57,7 +56,7 @@ class Matrix
         return new self($result);
     }
 
-    public function multiplyByTuple(TupleInterface $tuple): TupleInterface
+    public function multiplyByTuple(Tuple $tuple): Tuple
     {
         if (4 !== $this->size()) {
             throw new RuntimeException('Multiplication of matrix and tuple is only implemented for 4x4 matrices');

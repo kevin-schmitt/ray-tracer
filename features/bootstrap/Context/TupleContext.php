@@ -251,7 +251,7 @@ class TupleContext implements Context
         $coef = floatval($coef);
 
         $tuple = TupleFactory::create(...$this->stringToArrayFloat($tuple));
-        Assertion::true( $this->tuple->multiplyBy($coef)->equalTo($tuple));
+        Assertion::true($this->tuple->multiplyBy($coef)->equalTo($tuple));
     }
 
     /**

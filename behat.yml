@@ -8,6 +8,8 @@ default:
                 - RayTracer\Tests\Context\MatriceContext
                 - RayTracer\Tests\Context\TransformationContext
                 - RayTracer\Tests\Context\RayContext
+                - RayTracer\Tests\Context\Shape\SphereContext
+            
     extensions:
         DVDoug\Behat\CodeCoverage\Extension:
             filter:
