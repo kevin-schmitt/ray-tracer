@@ -20,7 +20,7 @@ interface TupleInterface
 
     public function negate(): void;
 
-    public function multiplyBy(float $coef): void;
+    public function multiplyBy(float $coef): Tuple;
 
     public function dividingBy(float $coef): void;
 

@@ -1,0 +1,23 @@
+@spheres
+Feature: Spheres
+
+  Scenario: A ray intersects a sphere at two points            # features/bootstrap/spheres.feature:4
+    Given r <- point(0, 0, -5) vector(0, 0, 1) spheres.feature # RayTracer\Tests\Context\Shape\SphereContext::rayInitialisation()
+      │ /home/kevin/project/ray-tracer/vendor/composer/../../src/Math/Ray.php
+      │ /home/kevin/project/ray-tracer/vendor/composer/../../src/Model/Tuple.php
+      │ /home/kevin/project/ray-tracer/vendor/composer/../../src/Model/TupleInterface.php
+      │ /home/kevin/project/ray-tracer/vendor/composer/../../src/Enum/TypeTuple.php
+      │ 
+    And s <- sphere                                            # RayTracer\Tests\Context\Shape\SphereContext::sAffectationSphere()
+      │ /home/kevin/project/ray-tracer/vendor/composer/../../src/Shape/Sphere.php
+      │ /home/kevin/project/ray-tracer/vendor/composer/../../src/Shape/Shape.php
+      │ /home/kevin/project/ray-tracer/vendor/composer/../../src/Math/Matrix.php
+      │ /home/kevin/project/ray-tracer/vendor/composer/../../src/Material/Material.php
+      │ /home/kevin/project/ray-tracer/vendor/composer/../../src/Color/Color.php
+      │ 
+    When xs <- intersect(s, r)                                 # RayTracer\Tests\Context\Shape\SphereContext::xsIntersectSR()
+      Fatal error: Class "Raytracer\Shape\IntersectionCollection" not found (Behat\Testwork\Call\Exception\FatalThrowableError)
+    Then xs.count = 1                                          # RayTracer\Tests\Context\Shape\SphereContext::xsCount()
+    And xs[0] = 4.0                                            # RayTracer\Tests\Context\Shape\SphereContext::xs()
+    And xs[1] = 6.0                                            # RayTracer\Tests\Context\Shape\SphereContext::xs()
+

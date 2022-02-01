@@ -142,10 +142,9 @@ class MatriceContext implements Context
     }
 
     /**
-     * @Then determinant = :determinantExcepted
      * @Then determinant(:name) = :determinantExcepted
      */
-    public function determinant(?string $name = null, float $determinantExcepted)
+    public function determinant(string $name = '', float $determinantExcepted)
     {
         $matrice = ('B' === $name) ? $this->matrices[1] : $this->matrices[0];
         Assertion::true(Comparator::float($matrice->determinant(), $determinantExcepted));

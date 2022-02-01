@@ -13,6 +13,11 @@ class Color
     ) {
     }
 
+    public static function from(float $red, float $green, float $blue): self
+    {
+        return new self($red, $green, $blue);
+    }
+
     public function getRed(): float
     {
         return $this->red;

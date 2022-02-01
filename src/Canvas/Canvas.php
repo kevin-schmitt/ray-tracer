@@ -21,6 +21,11 @@ class Canvas
         $this->initializePixels($background);
     }
 
+    public static function from(int $width, int $height, Color $background): self
+    {
+        return new self($width, $height, $background);
+    }
+
     public function getWidth(): int
     {
         return $this->width;
