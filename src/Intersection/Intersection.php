@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace RayTracer\Intersection;
 
+use RayTracer\Shape\Shape;
+
 final class Intersection
 {
     /**
@@ -11,33 +13,23 @@ final class Intersection
      */
     private array $values;
 
-    /**
-     * @param array<float> $values
-     */
-    public static function from(array $values): static
+    public static function from(float $t, Shape $shape): static
     {
-        return new static($values);
+        return new static($t, $shape);
     }
 
-    /**
-     * @param array<float> $values
-     */
-    private function __construct(array $values)
+    private function __construct(private float $t, private Shape $shape)
     {
-        $this->values = $values;
     }
 
-    /**
-     * @return array<float>
-     */
-    public function values(): array
+    public function t(): float
     {
-        return $this->values;
+        return $this->t;
     }
 
-    public function count(): int
+    public function shape(): Shape
     {
-        return count($this->values);
+        return $this->shape;
     }
 
     public function at(int $index): ?float

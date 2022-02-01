@@ -9,6 +9,7 @@ default:
                 - RayTracer\Tests\Context\TransformationContext
                 - RayTracer\Tests\Context\RayContext
                 - RayTracer\Tests\Context\Shape\SphereContext
+                - RayTracer\Tests\Context\Intersection\IntersectionContext
             
     extensions:
         DVDoug\Behat\CodeCoverage\Extension:

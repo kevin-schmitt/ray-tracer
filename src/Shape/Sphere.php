@@ -6,6 +6,7 @@ namespace RayTracer\Shape;
 
 use RayTracer\Enum\TypeTuple;
 use RayTracer\Intersection\Intersection;
+use RayTracer\Intersection\IntersectionCollection;
 use RayTracer\Material\Material;
 use RayTracer\Math\Matrix;
 use RayTracer\Math\Ray;
@@ -46,7 +47,7 @@ final class Sphere extends Shape
         return new static($transform, $material);
     }
 
-    public function localIntersect(Ray $ray): Intersection
+    public function localIntersect(Ray $ray): IntersectionCollection
     {
         $sphereToRay = $ray->origin()->minus($this->origin);
 
@@ -56,9 +57,23 @@ final class Sphere extends Shape
 
         $discriminant = $b ** 2 - 4 * $a * $c;
 
+        if ($discriminant < 0) {
+            return IntersectionCollection::from();
+        }
+
         $t1 = (-$b - sqrt($discriminant)) / (2 * $a);
         $t2 = (-$b + sqrt($discriminant)) / (2 * $a);
 
-        return Intersection::from([$t1, $t2]);
+        return IntersectionCollection::from(
+            Intersection::from($t1, $this),
+            Intersection::from($t2, $this)
+        );
+    }
+
+    public function intersectWith(float $t): IntersectionCollection
+    {
+        return IntersectionCollection::from(
+            Intersection::from($t, $this)
+        );
     }
 }

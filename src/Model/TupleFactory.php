@@ -12,7 +12,7 @@ class TupleFactory
         float $x,
         float $y,
         float $z,
-        float $w
+        float $w = TypeTuple::POINT
     ): TupleInterface {
         return new Tuple($x, $y, $z, $w);
     }
@@ -21,7 +21,7 @@ class TupleFactory
         float $x,
         float $y,
         float $z,
-        float $w
+        float $w = TypeTuple::VECTOR
     ): TupleInterface {
         return new Tuple($x, $y, $z, $w);
     }

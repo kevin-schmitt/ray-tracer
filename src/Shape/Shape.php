@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace RayTracer\Shape;
 
-use RayTracer\Intersection\Intersection;
+use RayTracer\Intersection\IntersectionCollection;
 use RayTracer\Material\Material;
 use RayTracer\Math\Matrix;
 use RayTracer\Math\Ray;
@@ -21,12 +21,24 @@ abstract class Shape
         return new static($transform, $material);
     }
 
-    public function intersect(Ray $ray): Intersection
+    public function intersect(Ray $ray): IntersectionCollection
     {
         $localRay = $ray->transform($this->transform->inverse());
 
         return $this->localIntersect($localRay);
     }
 
-    abstract public function localIntersect(Ray $ray): Intersection;
+    abstract public function localIntersect(Ray $ray): IntersectionCollection;
+
+    abstract public function intersectWith(float $t): IntersectionCollection;
+
+    public function transform(): Matrix
+    {
+        return $this->transform;
+    }
+
+    public function setTransform(Matrix $transform): void
+    {
+        $this->transform = $transform;
+    }
 }
