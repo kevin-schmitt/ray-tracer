@@ -191,7 +191,7 @@ class SphereContext implements Context
      */
     public function normalEqualToVector(float $x, float $y, float $z)
     {
-        Assertion::true($this->tuples[0]->equalTo(TupleFactory::vector($x,$y,$z)));
+        Assertion::true($this->tuples[0]->equalTo(TupleFactory::vector($x, $y, $z)));
     }
 
     /**
@@ -199,9 +199,9 @@ class SphereContext implements Context
      */
     public function normal(float $x, float $y, float $z)
     {
-        $this->tuples[] = $this->sphere->normalAt(TupleFactory::point($x,$y,$z));
+        $this->tuples[] = $this->sphere->normalAt(TupleFactory::point($x, $y, $z));
     }
- 
+
     /**
      * @Then n = normalize(:n)
      */
@@ -210,4 +210,11 @@ class SphereContext implements Context
         Assertion::true($this->tuples[0]->equalTo($this->tuples[0]->normalize()));
     }
 
+    /**
+     * @Given m <- scaling(:x, :y, :z) * rotation_z(:rotation)
+     */
+    public function mScalingRotationZ(float $x, float $y, float $z, float $rotation)
+    {
+        $this->matrices[] = Transformation::scaling($x, $y, $z)->multiply(Transformation::rotationAroundZ($rotation));
+    }
 }

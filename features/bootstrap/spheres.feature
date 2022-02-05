@@ -106,9 +106,22 @@ Feature: Spheres
     Scenario: The normal on a sphere at a nonaxial point
         Given s <- sphere
         When n <- normal_at(s, point(0.57735026919, 0.57735026919, 0.57735026919))
-            Then n = vector(0.57735026919, 0.57735026919, 0.57735026919)
+        Then n = vector(0.57735026919, 0.57735026919, 0.57735026919)
 
     Scenario: The normal is normalized vector
         Given s <- sphere
         When n <- normal_at(s, point(0.57735026919, 0.57735026919, 0.57735026919))
-            Then n = normalize(n)
+        Then n = normalize(n)
+
+    Scenario: Computing the normal on the translated sphere
+        Given s <- sphere
+        And set_transform(s, translation(0, 1, 0))
+        When n <- normal_at(s, point(0, 1.70711, -0.70711))
+        Then n = vector(0, 0.70711, -0.70711)
+
+    Scenario: Computing the normal on the transformed sphere
+        Given s <- sphere
+        And m <- scaling(1, 0.5, 1) * rotation_z(0.62831853071)
+        And set_transform(s, m)
+        When n <- normal_at(s, point(0, 0.70710678118, -0.70710678118))
+        Then n = vector(0, 0.97014, -0.24254)

@@ -183,14 +183,13 @@ class Tuple implements TupleInterface
         );
     }
 
-    public static function point(float $x, float $y, float $z) : self
+    public static function point(float $x, float $y, float $z): self
     {
         return new self($x, $y, $z, TypeTuple::POINT);
     }
 
-    public static function vector(float $x, float $y, float $z) : self
+    public static function vector(float $x, float $y, float $z): self
     {
         return new self($x, $y, $z, TypeTuple::VECTOR);
     }
-    
 }

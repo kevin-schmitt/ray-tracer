@@ -45,7 +45,7 @@ abstract class Shape
 
     public function normalAt(Tuple $worldPoint): Tuple
     {
-        $localPoint  = $this->transform->inverse()->multiplyByTuple($worldPoint);
+        $localPoint = $this->transform->inverse()->multiplyByTuple($worldPoint);
         $localNormal = $this->localNormalAt($localPoint);
         $worldNormal = $this->transform->inverse()->transpose()->multiplyByTuple($localNormal);
 
