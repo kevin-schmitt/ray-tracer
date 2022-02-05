@@ -71,11 +71,11 @@ Feature: Tuples
 
     Scenario: Normalizing vector(4, 0, 0) gives (1, 0, 0)
         Given v <- vector("4, 0, 0")
-        Then normalize = vector("1, 0, 0")
+        Then normalize = vector(1, 0, 0)
 
     Scenario: Normalizing vector(1, 2, 3) gives (1, 0, 0)
         Given v <- vector("1, 2, 3")
-        Then normalize = apprixomately vector("0.26726, 0.53452, 0.80178")
+        Then normalize = apprixomately vector(0.26726, 0.53452, 0.80178)
 
     Scenario: Normalazing vector(4, 0, 0) gives (1, 0, 0)
         Given v <- vector("4, 0, 0")

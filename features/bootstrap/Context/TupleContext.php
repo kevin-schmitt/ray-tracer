@@ -234,13 +234,11 @@ class TupleContext implements Context
     }
 
     /**
-     * @Then magnitude = :arg1
+     * @Then magnitude = :magnitudeExcepted
      */
-    public function magnitudeV($arg1)
+    public function magnitudeV(float $magnitudeExcepted)
     {
-        $arg1 = floatval($arg1);
-        $magnitude = $this->tuple->getMagnitude();
-        Assertion::same(true, Comparator::float($arg1, $magnitude));
+        Assertion::true(Comparator::float($this->tuple->getMagnitude(), $magnitudeExcepted));
     }
 
     /**
@@ -266,13 +264,13 @@ class TupleContext implements Context
     }
 
     /**
-     * @Then normalize = vector(:vector)
-     * @Then normalize = apprixomately vector(:vector)
+     * @Then normalize = vector(:x, :y, :z)
+     * @Then normalize = apprixomately vector(:x, :y, :z)
      */
-    public function normalizeVector(string $vector)
+    public function normalizeVector(float $x, float $y, float $z)
     {
-        $this->tuple->normalize();
-        $this->tupleEqualsArrayValues($vector);
+        $vectorExcepted = Tuple::vector($x, $y, $z);
+        Assertion::true($this->tuple->normalize()->equalTo($vectorExcepted));
     }
 
     /**
@@ -280,7 +278,7 @@ class TupleContext implements Context
      */
     public function normNormalizeV()
     {
-        $this->tuple->normalize();
+        $this->tuple = $this->tuple->normalize();
     }
 
     /**

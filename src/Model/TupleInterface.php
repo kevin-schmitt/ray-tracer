@@ -16,7 +16,7 @@ interface TupleInterface
 
     public function add(TupleInterface $tuple): void;
 
-    public function substr(TupleInterface $tuple): void;
+    public function substr(TupleInterface $tuple): Tuple;
 
     public function negate(): void;
 
@@ -26,7 +26,7 @@ interface TupleInterface
 
     public function getMagnitude(): float;
 
-    public function normalize(): void;
+    public function normalize(): Tuple;
 
     public function dot(TupleInterface $tuple): float;
 

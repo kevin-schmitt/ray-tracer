@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace RayTracer\Shape;
 
+use InvalidArgumentException;
 use RayTracer\Enum\TypeTuple;
 use RayTracer\Intersection\Intersection;
 use RayTracer\Intersection\IntersectionCollection;
 use RayTracer\Material\Material;
 use RayTracer\Math\Matrix;
 use RayTracer\Math\Ray;
+use RayTracer\Math\Transformation;
 use RayTracer\Model\Tuple;
 
 final class Sphere extends Shape
@@ -75,5 +77,10 @@ final class Sphere extends Shape
         return IntersectionCollection::from(
             Intersection::from($t, $this)
         );
+    }
+
+    public function localNormalAt(Tuple $point): Tuple
+    {
+        return Tuple::vector($point->getX(), $point->getY(), $point->getZ());
     }
 }

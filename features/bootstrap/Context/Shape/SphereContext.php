@@ -13,6 +13,7 @@ use RayTracer\Math\Matrix;
 use RayTracer\Math\Ray;
 use RayTracer\Math\Transformation;
 use RayTracer\Model\Tuple;
+use RayTracer\Model\TupleFactory;
 use RayTracer\Shape\Shape;
 use RayTracer\Shape\Sphere;
 use RayTracer\Tests\Context\ArrayHelperTrait;
@@ -51,7 +52,7 @@ class SphereContext implements Context
     /**
      * @Given s <- sphere
      */
-    public function sAffectationSphere()
+    public function createSphere()
     {
         $this->sphere = Sphere::default();
     }
@@ -184,4 +185,29 @@ class SphereContext implements Context
     {
         $this->sphere->setTransform(Transformation::translation($x, $y, $z));
     }
+
+    /**
+     * @Then n = vector(:x, :y, :z)
+     */
+    public function normalEqualToVector(float $x, float $y, float $z)
+    {
+        Assertion::true($this->tuples[0]->equalTo(TupleFactory::vector($x,$y,$z)));
+    }
+
+    /**
+     * @When n <- normal_at(s, point(:x, :y, :z))
+     */
+    public function normal(float $x, float $y, float $z)
+    {
+        $this->tuples[] = $this->sphere->normalAt(TupleFactory::point($x,$y,$z));
+    }
+ 
+    /**
+     * @Then n = normalize(:n)
+     */
+    public function normalEqualToNormalizeVector()
+    {
+        Assertion::true($this->tuples[0]->equalTo($this->tuples[0]->normalize()));
+    }
+
 }
