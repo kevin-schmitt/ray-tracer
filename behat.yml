@@ -10,6 +10,8 @@ default:
                 - RayTracer\Tests\Context\RayContext
                 - RayTracer\Tests\Context\Shape\SphereContext
                 - RayTracer\Tests\Context\Intersection\IntersectionContext
+                - RayTracer\Tests\Context\LightContext
+                - RayTracer\Tests\Context\MaterialContext
             
     extensions:
         DVDoug\Behat\CodeCoverage\Extension:

@@ -67,4 +67,21 @@ class Color
     {
         return sprintf('%s%s%s', $this->getRed(), $this->getGreen(), $this->getBlue());
     }
+
+    public function equalTo(Color $color, float $delta = 0.00001) : bool
+    {
+        if (abs($this->red - $color->getRed()) > $delta) {
+            return false;
+        }
+
+        if (abs($this->green - $color->getGreen()) > $delta) {
+            return false;
+        }
+
+        if (abs($this->blue - $color->getBlue()) > $delta) {
+            return false;
+        }
+
+        return true;
+    }
 }
