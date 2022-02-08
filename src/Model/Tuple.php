@@ -192,4 +192,12 @@ class Tuple implements TupleInterface
     {
         return new self($x, $y, $z, TypeTuple::VECTOR);
     }
+
+    /**
+     * @throws RuntimeException
+     */
+    public function reflect(self $normal): self
+    {
+        return $this->minus($normal->multiplyBy(2 * $this->dot($normal)));
+    }
 }
