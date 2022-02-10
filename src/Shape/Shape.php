@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace RayTracer\Shape;
 
-use PhpParser\Node\Expr\AssignOp\Mod;
 use RayTracer\Intersection\IntersectionCollection;
 use RayTracer\Material\Material;
 use RayTracer\Math\Matrix;
@@ -53,10 +52,10 @@ abstract class Shape
         return Tuple::vector($worldNormal->getX(), $worldNormal->getY(), $worldNormal->getZ())->normalize();
     }
 
-    public function material() : Material
+    public function material(): Material
     {
         return $this->material;
     }
-    
+
     abstract public function localNormalAt(Tuple $point): Tuple;
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace RayTracer\Tests\Context;
 
@@ -12,7 +14,6 @@ use RayTracer\Shape\Sphere;
 
 final class MaterialContext implements Context
 {
-
     private Material $material;
     private Tuple $point1;
     private Tuple $vector1;
@@ -71,7 +72,7 @@ final class MaterialContext implements Context
     /**
      * @Given eyeV <- vector(:x, :y, :z)
      */
-    public function eyevVector(float $x, float $y, float $z) : void
+    public function eyevVector(float $x, float $y, float $z): void
     {
         $this->vector1 = Tuple::vector($x, $y, $z);
     }
@@ -79,7 +80,7 @@ final class MaterialContext implements Context
     /**
      * @When light <- point_light(point(:x, :y, :z), color(:red, :green, :blue))
      */
-    public function pointLightCreation(float $x, float $y, float $z, float $red, float $green, float $blue) : void
+    public function pointLightCreation(float $x, float $y, float $z, float $red, float $green, float $blue): void
     {
         $this->pointLight = PointLight::from(
             Tuple::point($x, $y, $z),
@@ -90,11 +91,11 @@ final class MaterialContext implements Context
     /**
      * @Given normalv <- vector(:x, :y, :z)
      */
-    public function normalCreation(float $x, float $y, float $z) : void
+    public function normalCreation(float $x, float $y, float $z): void
     {
         $this->normal = Tuple::vector($x, $y, $z);
     }
-   
+
     /**
      * @When result <- lighting(:m, :light, :position, :eyev, :normalv)
      */
@@ -106,9 +107,8 @@ final class MaterialContext implements Context
     /**
      * @Then result = color(:red, :green, :blue)
      */
-    public function resultEqualToColor(float $red, float $green, float $blue) : void
+    public function resultEqualToColor(float $red, float $green, float $blue): void
     {
         Assertion::true($this->result->equalTo(Color::from($red, $green, $blue)));
     }
-
 }

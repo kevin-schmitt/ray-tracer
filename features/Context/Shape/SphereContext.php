@@ -216,15 +216,15 @@ class SphereContext implements Context
     /**
      * @Given m <- scaling(:x, :y, :z) * rotation_z(:rotation)
      */
-    public function mScalingRotationZ(float $x, float $y, float $z, float $rotation) : void
+    public function mScalingRotationZ(float $x, float $y, float $z, float $rotation): void
     {
         $this->matrices[] = Transformation::scaling($x, $y, $z)->multiply(Transformation::rotationAroundZ($rotation));
     }
 
-     /**
+    /**
      * @When m <- s.material
      */
-    public function sphereMaterialCreation() : void
+    public function sphereMaterialCreation(): void
     {
         $this->material = $this->sphere->material();
     }
@@ -239,8 +239,8 @@ class SphereContext implements Context
 
     /**
      * @Given m.ambient <- :ambient
-    */
-    public function ambientCreation(float $ambient) : void
+     */
+    public function ambientCreation(float $ambient): void
     {
         $this->material = Material::from(
             $this->material->color(),
@@ -248,14 +248,13 @@ class SphereContext implements Context
             $this->material->diffuse(),
             $this->material->specular(),
             $this->material->shininess()
-
         );
     }
 
     /**
      * @Given  m <- material() spheres.feature
-    */
-    public function materialCreation() : void
+     */
+    public function materialCreation(): void
     {
         $this->material = Material::default();
     }
@@ -263,7 +262,7 @@ class SphereContext implements Context
     /**
      * @When s.m <- m
      */
-    public function setMaterialForSophere() : void
+    public function setMaterialForSophere(): void
     {
         $this->sphere = Sphere::from($this->sphere->transform(), $this->material);
     }
@@ -271,9 +270,8 @@ class SphereContext implements Context
     /**
      * @Then s.material = m
      */
-    public function sphereMaterialEqualToMaterialUpdate() : void
+    public function sphereMaterialEqualToMaterialUpdate(): void
     {
         Assertion::true($this->sphere->material()->equalTo($this->material));
     }
-
 }
