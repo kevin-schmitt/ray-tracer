@@ -61,14 +61,6 @@ class Tuple implements TupleInterface
         return $this;
     }
 
-    public function negate(): void
-    {
-        $this->x = -$this->x;
-        $this->y = -$this->y;
-        $this->z = -$this->z;
-        $this->w = -$this->w;
-    }
-
     public function multiplyBy(float $factor): self
     {
         return new self(
@@ -199,5 +191,15 @@ class Tuple implements TupleInterface
     public function reflect(self $normal): self
     {
         return $this->minus($normal->multiplyBy(2 * $this->dot($normal)));
+    }
+
+    public function negate(): self
+    {
+        return new self(
+            -1 * $this->x,
+            -1 * $this->y,
+            -1 * $this->z,
+            -1 * $this->w
+        );
     }
 }

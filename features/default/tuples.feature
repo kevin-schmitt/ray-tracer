@@ -35,7 +35,7 @@ Feature: Tuples
 
     Scenario: Negating a tuple
         Given a <- vector(1, -2, 3, -4)
-        Then -a = vector("-1, 2, -3, 4")
+        Then -a = vector(-1, 2, -3, 4)
 
     Scenario: Multiplying a tuple by scalar
         Given a <- tuple("1, -2, 3, -4")

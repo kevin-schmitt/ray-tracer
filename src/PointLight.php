@@ -3,6 +3,7 @@
 namespace RayTracer;
 
 use RayTracer\Color\Color;
+use RayTracer\Material\Material;
 use RayTracer\Model\Tuple;
 
 final class PointLight

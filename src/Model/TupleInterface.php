@@ -18,7 +18,7 @@ interface TupleInterface
 
     public function substr(TupleInterface $tuple): Tuple;
 
-    public function negate(): void;
+    public function negate(): Tuple;
 
     public function multiplyBy(float $coef): Tuple;
 

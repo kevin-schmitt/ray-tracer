@@ -9,6 +9,7 @@ use Behat\Behat\Context\Context;
 use RayTracer\Enum\TypeTuple;
 use RayTracer\Intersection\Intersection;
 use RayTracer\Intersection\IntersectionCollection;
+use RayTracer\Material\Material;
 use RayTracer\Math\Matrix;
 use RayTracer\Math\Ray;
 use RayTracer\Math\Transformation;
@@ -36,6 +37,8 @@ class SphereContext implements Context
     private Shape $sphere;
 
     private array $matrices;
+
+    private Material $material;
 
     /**
      * @Given r <- point(:pointX, :pointY, :pointZ) vector(:vectorX, :vectorY, :vectorZ) spheres.feature
@@ -213,8 +216,64 @@ class SphereContext implements Context
     /**
      * @Given m <- scaling(:x, :y, :z) * rotation_z(:rotation)
      */
-    public function mScalingRotationZ(float $x, float $y, float $z, float $rotation)
+    public function mScalingRotationZ(float $x, float $y, float $z, float $rotation) : void
     {
         $this->matrices[] = Transformation::scaling($x, $y, $z)->multiply(Transformation::rotationAroundZ($rotation));
     }
+
+     /**
+     * @When m <- s.material
+     */
+    public function sphereMaterialCreation() : void
+    {
+        $this->material = $this->sphere->material();
+    }
+
+    /**
+     * @Then m = material()
+     */
+    public function materialEqualToDefaultMaterial()
+    {
+        Assertion::true($this->material->equalTo(Material::default()));
+    }
+
+    /**
+     * @Given m.ambient <- :ambient
+    */
+    public function ambientCreation(float $ambient) : void
+    {
+        $this->material = Material::from(
+            $this->material->color(),
+            $ambient,
+            $this->material->diffuse(),
+            $this->material->specular(),
+            $this->material->shininess()
+
+        );
+    }
+
+    /**
+     * @Given  m <- material() spheres.feature
+    */
+    public function materialCreation() : void
+    {
+        $this->material = Material::default();
+    }
+
+    /**
+     * @When s.m <- m
+     */
+    public function setMaterialForSophere() : void
+    {
+        $this->sphere = Sphere::from($this->sphere->transform(), $this->material);
+    }
+
+    /**
+     * @Then s.material = m
+     */
+    public function sphereMaterialEqualToMaterialUpdate() : void
+    {
+        Assertion::true($this->sphere->material()->equalTo($this->material));
+    }
+
 }

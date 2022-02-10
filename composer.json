@@ -6,8 +6,7 @@
     "autoload": {
         "psr-4": {
             "RayTracer\\": "src/",
-            "RayTracer\\Intersection\\": "src/Intersection",
-            "RayTracer\\Tests\\": "features/bootstrap"
+            "RayTracer\\Tests\\": "features"
         }
     },
     "require-dev": {

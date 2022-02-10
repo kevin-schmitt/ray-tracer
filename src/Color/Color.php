@@ -84,4 +84,31 @@ class Color
 
         return true;
     }
+
+    public function product(self $that): self
+    {
+        return new self(
+            $this->red * $that->getRed(),
+            $this->green * $that->getGreen(),
+            $this->blue * $that->getBlue()
+        );
+    }
+
+    public function multiplyBy(float $factor): self
+    {
+        return new self(
+            $factor * $this->red,
+            $factor * $this->green,
+            $factor * $this->blue
+        );
+    }
+
+    public function plus(self $that): self
+    {
+        return new self(
+            $this->red + $that->getRed(),
+            $this->green + $that->getGreen(),
+            $this->blue + $that->getBlue()
+        );
+    }
 }

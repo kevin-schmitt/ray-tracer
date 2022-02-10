@@ -217,12 +217,11 @@ class TupleContext implements Context
     }
 
     /**
-     * @Then -a = vector(:vector)
+     * @Then -a = vector(:x, :y, :z, :w)
      */
-    public function aVector($vector)
+    public function aVector(float $x, float $y, float $z, float $w)
     {
-        $this->tuple->negate();
-        $this->tupleEqualsArrayValues($vector);
+        Assertion::true($this->tuple->negate()->equalTo(Tuple::from($x, $y, $z, $w)));
     }
 
     /**

@@ -11,8 +11,12 @@ default:
                 - RayTracer\Tests\Context\Shape\SphereContext
                 - RayTracer\Tests\Context\Intersection\IntersectionContext
                 - RayTracer\Tests\Context\LightContext
+            paths: [ '%paths.base%/features/default' ]
+        material:
+            contexts:
                 - RayTracer\Tests\Context\MaterialContext
-            
+            paths: [ '%paths.base%/features/materials' ]
+
     extensions:
         DVDoug\Behat\CodeCoverage\Extension:
             filter:
