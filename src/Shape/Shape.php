@@ -57,5 +57,10 @@ abstract class Shape
         return $this->material;
     }
 
+    public function setMaterial(Material $material): void
+    {
+        $this->material = $material;
+    }
+
     abstract public function localNormalAt(Tuple $point): Tuple;
 }

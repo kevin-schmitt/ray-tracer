@@ -16,6 +16,10 @@ default:
             contexts:
                 - RayTracer\Tests\Context\MaterialContext
             paths: [ '%paths.base%/features/materials' ]
+        puttingit_together:
+            contexts:
+                - RayTracer\Tests\Context\PuttingTogetherContext
+            paths: [ '%paths.base%/features/integration' ]
 
     extensions:
         DVDoug\Behat\CodeCoverage\Extension:
