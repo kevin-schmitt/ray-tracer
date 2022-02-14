@@ -9,10 +9,12 @@ use Behat\Behat\Context\Context;
 use RayTracer\Enum\TypeTuple;
 use RayTracer\Intersection\Intersection;
 use RayTracer\Intersection\IntersectionCollection;
+use RayTracer\Material\Material;
 use RayTracer\Math\Matrix;
 use RayTracer\Math\Ray;
 use RayTracer\Math\Transformation;
 use RayTracer\Model\Tuple;
+use RayTracer\Model\TupleFactory;
 use RayTracer\Shape\Shape;
 use RayTracer\Shape\Sphere;
 use RayTracer\Tests\Context\ArrayHelperTrait;
@@ -36,6 +38,8 @@ class SphereContext implements Context
 
     private array $matrices;
 
+    private Material $material;
+
     /**
      * @Given r <- point(:pointX, :pointY, :pointZ) vector(:vectorX, :vectorY, :vectorZ) spheres.feature
      */
@@ -51,7 +55,7 @@ class SphereContext implements Context
     /**
      * @Given s <- sphere
      */
-    public function sAffectationSphere()
+    public function createSphere()
     {
         $this->sphere = Sphere::default();
     }
@@ -183,5 +187,91 @@ class SphereContext implements Context
     public function setTransformWitTranslation(float $x, float $y, float $z)
     {
         $this->sphere->setTransform(Transformation::translation($x, $y, $z));
+    }
+
+    /**
+     * @Then n = vector(:x, :y, :z)
+     */
+    public function normalEqualToVector(float $x, float $y, float $z)
+    {
+        Assertion::true($this->tuples[0]->equalTo(TupleFactory::vector($x, $y, $z)));
+    }
+
+    /**
+     * @When n <- normal_at(s, point(:x, :y, :z))
+     */
+    public function normal(float $x, float $y, float $z)
+    {
+        $this->tuples[] = $this->sphere->normalAt(TupleFactory::point($x, $y, $z));
+    }
+
+    /**
+     * @Then n = normalize(:n)
+     */
+    public function normalEqualToNormalizeVector()
+    {
+        Assertion::true($this->tuples[0]->equalTo($this->tuples[0]->normalize()));
+    }
+
+    /**
+     * @Given m <- scaling(:x, :y, :z) * rotation_z(:rotation)
+     */
+    public function mScalingRotationZ(float $x, float $y, float $z, float $rotation): void
+    {
+        $this->matrices[] = Transformation::scaling($x, $y, $z)->multiply(Transformation::rotationAroundZ($rotation));
+    }
+
+    /**
+     * @When m <- s.material
+     */
+    public function sphereMaterialCreation(): void
+    {
+        $this->material = $this->sphere->material();
+    }
+
+    /**
+     * @Then m = material()
+     */
+    public function materialEqualToDefaultMaterial()
+    {
+        Assertion::true($this->material->equalTo(Material::default()));
+    }
+
+    /**
+     * @Given m.ambient <- :ambient
+     */
+    public function ambientCreation(float $ambient): void
+    {
+        $this->material = Material::from(
+            $this->material->color(),
+            $ambient,
+            $this->material->diffuse(),
+            $this->material->specular(),
+            $this->material->shininess()
+        );
+    }
+
+    /**
+     * @Given  m <- material() spheres.feature
+     */
+    public function materialCreation(): void
+    {
+        $this->material = Material::default();
+    }
+
+    /**
+     * @When s.m <- m
+     */
+    public function setMaterialForSophere(): void
+    {
+        $this->sphere = Sphere::from($this->sphere->transform(), $this->material);
+    }
+
+    /**
+     * @Then s.material = m
+     */
+    public function sphereMaterialEqualToMaterialUpdate(): void
+    {
+        Assertion::true($this->sphere->material()->equalTo($this->material));
     }
 }

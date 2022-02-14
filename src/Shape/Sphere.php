@@ -76,4 +76,9 @@ final class Sphere extends Shape
             Intersection::from($t, $this)
         );
     }
+
+    public function localNormalAt(Tuple $point): Tuple
+    {
+        return Tuple::vector($point->getX(), $point->getY(), $point->getZ());
+    }
 }

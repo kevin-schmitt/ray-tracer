@@ -56,9 +56,9 @@ class Canvas
         }
     }
 
-    public function pixelAt(int $x, int $y): ?Color
+    public function pixelAt(int $x, int $y): Color
     {
-        return $this->pixels[$x][$y] ?? null;
+        return $this->pixels[$x][$y];
     }
 
     public function writePixel(int $x, int $y, Color $color): Color

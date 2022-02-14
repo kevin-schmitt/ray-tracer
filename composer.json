@@ -6,8 +6,7 @@
     "autoload": {
         "psr-4": {
             "RayTracer\\": "src/",
-            "RayTracer\\Intersection\\": "src/Intersection",
-            "RayTracer\\Tests\\": "features/bootstrap"
+            "RayTracer\\Tests\\": "features"
         }
     },
     "require-dev": {
@@ -16,7 +15,8 @@
         "rector/rector": "^0.12.12",
         "friendsofphp/php-cs-fixer": "^3.4",
         "sebastian/phpcpd": "^6.0",
-        "dvdoug/behat-code-coverage": "^5.2"
+        "dvdoug/behat-code-coverage": "^5.2",
+        "phpunit/phpunit": "^9.5"
     },
     "authors": [
         {

@@ -51,20 +51,14 @@ class Tuple implements TupleInterface
         $this->w = ($tuple->getW() + $this->w > 0) ? 1 : 0;
     }
 
-    public function substr(TupleInterface $tuple): void
+    public function substr(TupleInterface $tuple): self
     {
         $this->x -= $tuple->getX();
         $this->y -= $tuple->getY();
         $this->z -= $tuple->getZ();
         $this->w = abs($this->w - $tuple->getW());
-    }
 
-    public function negate(): void
-    {
-        $this->x = -$this->x;
-        $this->y = -$this->y;
-        $this->z = -$this->z;
-        $this->w = -$this->w;
+        return $this;
     }
 
     public function multiplyBy(float $factor): self
@@ -87,23 +81,19 @@ class Tuple implements TupleInterface
 
     public function getMagnitude(): float
     {
-        return
-            sqrt(
-                ($this->x * $this->x) +
-                ($this->y * $this->y) +
-                ($this->z * $this->z) +
-                ($this->w * $this->w)
-            )
-        ;
+        return sqrt($this->x ** 2 + $this->y ** 2 + $this->z ** 2 + $this->w ** 2);
     }
 
-    public function normalize(): void
+    public function normalize(): self
     {
         $magnitude = $this->getMagnitude();
-        $this->x = $this->x / $magnitude;
-        $this->y = $this->y / $magnitude;
-        $this->z = $this->z / $magnitude;
-        $this->w = $this->w / $magnitude;
+
+        return new self(
+            $this->x / $magnitude,
+            $this->y / $magnitude,
+            $this->z / $magnitude,
+            $this->w / $magnitude
+        );
     }
 
     public function dot(TupleInterface $tuple): float
@@ -182,6 +172,34 @@ class Tuple implements TupleInterface
             $this->y - $that->getY(),
             $this->z - $that->getZ(),
             $this->w - $that->getW()
+        );
+    }
+
+    public static function point(float $x, float $y, float $z): self
+    {
+        return new self($x, $y, $z, TypeTuple::POINT);
+    }
+
+    public static function vector(float $x, float $y, float $z): self
+    {
+        return new self($x, $y, $z, TypeTuple::VECTOR);
+    }
+
+    /**
+     * @throws RuntimeException
+     */
+    public function reflect(self $normal): self
+    {
+        return $this->minus($normal->multiplyBy(2 * $this->dot($normal)));
+    }
+
+    public function negate(): self
+    {
+        return new self(
+            -1 * $this->x,
+            -1 * $this->y,
+            -1 * $this->z,
+            -1 * $this->w
         );
     }
 }

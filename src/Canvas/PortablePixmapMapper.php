@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace RayTracer;
+namespace RayTracer\Canvas;
 
 use function file_put_contents;
 use const PHP_EOL;
-use RayTracer\Canvas\Canvas;
 use function sprintf;
 
 final class PortablePixmapMapper

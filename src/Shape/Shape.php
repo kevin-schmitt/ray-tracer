@@ -8,6 +8,7 @@ use RayTracer\Intersection\IntersectionCollection;
 use RayTracer\Material\Material;
 use RayTracer\Math\Matrix;
 use RayTracer\Math\Ray;
+use RayTracer\Model\Tuple;
 
 abstract class Shape
 {
@@ -41,4 +42,25 @@ abstract class Shape
     {
         $this->transform = $transform;
     }
+
+    public function normalAt(Tuple $worldPoint): Tuple
+    {
+        $localPoint = $this->transform->inverse()->multiplyByTuple($worldPoint);
+        $localNormal = $this->localNormalAt($localPoint);
+        $worldNormal = $this->transform->inverse()->transpose()->multiplyByTuple($localNormal);
+
+        return Tuple::vector($worldNormal->getX(), $worldNormal->getY(), $worldNormal->getZ())->normalize();
+    }
+
+    public function material(): Material
+    {
+        return $this->material;
+    }
+
+    public function setMaterial(Material $material): void
+    {
+        $this->material = $material;
+    }
+
+    abstract public function localNormalAt(Tuple $point): Tuple;
 }

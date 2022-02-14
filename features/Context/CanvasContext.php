@@ -6,8 +6,8 @@ use Assert\Assertion;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use RayTracer\Canvas\Canvas;
+use RayTracer\Canvas\PortablePixmapMapper;
 use RayTracer\Color\Color;
-use RayTracer\PortablePixmapMapper;
 use RayTracer\Utils\Comparator;
 
 /**
@@ -24,7 +24,7 @@ class CanvasContext implements Context
     /**
      * @Given c <- canvas(:canvas)
      */
-    public function canvasAffectation($canvas)
+    public function canvasAffectation($canvas): void
     {
         $canvas = $this->stringToArrayFloat($canvas);
         $this->canvas = new Canvas(...$canvas);
@@ -33,7 +33,7 @@ class CanvasContext implements Context
     /**
      * @Then c.width = :width
      */
-    public function widthEquals(int $width)
+    public function widthEquals(int $width): void
     {
         Assertion::eq($width, $this->canvas->getWidth());
     }
@@ -41,7 +41,7 @@ class CanvasContext implements Context
     /**
      * @Then c.height = :height
      */
-    public function heightEquals(int $height)
+    public function heightEquals(int $height): void
     {
         Assertion::eq($height, $this->canvas->getHeight());
     }
@@ -49,7 +49,7 @@ class CanvasContext implements Context
     /**
      * @Then every pixel of c is color(:color)
      */
-    public function everyPixelOfCIsColor(string $color)
+    public function everyPixelOfCIsColor(string $color): void
     {
         $colorExcepted = new Color(...$this->stringToArrayFloat($color));
 
@@ -63,7 +63,7 @@ class CanvasContext implements Context
     /**
      * @Given :colorName <- color(:color)
      */
-    public function redColor($colorName, $color)
+    public function redColor($colorName, $color): void
     {
         $this->colors[$colorName] = new Color(...$this->stringToArrayFloat($color));
     }
@@ -71,7 +71,7 @@ class CanvasContext implements Context
     /**
      * @When write_pixel(c, :arg1, red)
      */
-    public function writePixelCRed($arg1)
+    public function writePixelCRed($arg1): void
     {
         [$x, $y] = $this->stringToArrayFloat($arg1);
         $this->canvas->writePixel($x, $y, $this->colors[0]);
@@ -80,7 +80,7 @@ class CanvasContext implements Context
     /**
      * @Then pixel_at(c, :arg1) = red
      */
-    public function pixelAtCRed($arg1)
+    public function pixelAtCRed($arg1): void
     {
         [$x, $y] = $this->stringToArrayFloat($arg1);
         Assertion::same($this->canvas->pixelAt($x, $y)->__toString(), $this->colors['red']->__toString());
@@ -89,7 +89,7 @@ class CanvasContext implements Context
     /**
      * @When ppm <- canvas_to_ppm
      */
-    public function ppmCanvasToPpmC()
+    public function ppmCanvasToPpmC(): void
     {
         $this->ppmFileContent = (new PortablePixmapMapper())->map($this->canvas);
     }
@@ -97,7 +97,7 @@ class CanvasContext implements Context
     /**
      * @Then the file header has :
      */
-    public function theFileHeaderHas(PyStringNode $headerExcepted)
+    public function theFileHeaderHas(PyStringNode $headerExcepted): void
     {
         Assertion::contains($this->ppmFileContent, $headerExcepted->getRaw());
     }
@@ -105,7 +105,7 @@ class CanvasContext implements Context
     /**
      * @When write_pixel(:arg1)
      */
-    public function writePixel($arg1)
+    public function writePixel($arg1): void
     {
         [$canvasName, $x, $y, $colorName] = $this->stringToArray($arg1);
         $this->canvas->writePixel($x, $y, $this->colors[$colorName]);
@@ -114,7 +114,7 @@ class CanvasContext implements Context
     /**
      * @Then line :lines of ppm are :
      */
-    public function lineOfPpmAre($lines, PyStringNode $content)
+    public function lineOfPpmAre($lines, PyStringNode $content): void
     {
         Assertion::same(true, Comparator::string($content->getRaw(), $this->ppmFileContent));
     }
@@ -122,7 +122,7 @@ class CanvasContext implements Context
     /**
      * @When every pixel of c is set to color(:arg1)
      */
-    public function everyPixelOfCIsSetToColor($arg1)
+    public function everyPixelOfCIsSetToColor($arg1): void
     {
         $color = new Color(...$this->stringToArrayFloat($arg1));
         $this->canvas->initializePixels($color);

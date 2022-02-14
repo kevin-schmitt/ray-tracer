@@ -20,6 +20,7 @@ class TupleContext implements Context
     use ArrayHelperTrait;
     private TupleInterface $tuple;
     private TupleInterface $tuple2;
+    private TupleInterface $tuple3;
     /**
      * @var array<Color>
      */
@@ -57,44 +58,35 @@ class TupleContext implements Context
     }
 
     /**
-     * @Given p <- vector(:tuple)
-     * @Given v1 <- vector(:tuple)
-     * @Given zero <- vector(:tuple)
-     * @Given v <- vector(:tuple)
+     * @Given p <- vector(:x, :y, :z)
+     * @Given v1 <- vector(:x, :y, :z)
+     * @Given zero <- vector(:x, :y, :z)
+     * @Given v <- vector(:x, :y, :z)
+     * @Given a <- vector(:x, :y, :z)
      */
-    public function givenVector($tuple)
+    public function givenVector(float $x, float $y, float $z)
     {
-        $tuple = sprintf('%s, %s', $tuple, '0');
-        $this->tuple = TupleFactory::create(...$this->stringToArrayFloat($tuple));
+        $this->tuple = Tuple::vector($x, $y, $z);
     }
 
     /**
-     * @Given a <- vector(:tuple)
+     * @Given p <- vector(:x, :y, :z, :w)
+     * @Given a1 <- tuple(:x, :y, :z, :w)
+     * @Given a <- vector(:x, :y, :z, :w)
      */
-    public function givenVectorWithW(string $tuple)
+    public function givenVectorWithW(float $x, float $y, float $z, float $w): void
     {
-        if (count(explode(',', $tuple)) < 4) {
-            $tuple = sprintf('%s, %s', $tuple, '0');
-        }
-        $this->tuple = TupleFactory::create(...$this->stringToArrayFloat($tuple));
+        $this->tuple = TupleFactory::create($x, $y, $z, $w);
     }
 
     /**
-     * @Given a1 <- tuple(:tuple)
+     * @Given v2 <- vector(:x, :y, :z)
+     * @Given b <- vector(:x, :y, :z)
+     * @Given n <- vector(:x, :y, :z)
      */
-    public function aTuple(string $tuple)
+    public function vectorTupleV2(float $x, float $y, float $z)
     {
-        $this->tuple = TupleFactory::create(...$this->stringToArrayFloat($tuple));
-    }
-
-    /**
-     * @Given v2 <- vector(:tuple)
-     * @Given b <- vector(:tuple)
-     */
-    public function vectorTupleV2(string $tuple)
-    {
-        $tuple = sprintf('%s, %s', $tuple, '0');
-        $this->tuple2 = TupleFactory::create(...$this->stringToArrayFloat($tuple));
+        $this->tuple2 = Tuple::vector($x, $y, $z);
     }
 
     /**
@@ -225,22 +217,19 @@ class TupleContext implements Context
     }
 
     /**
-     * @Then -a = vector(:vector)
+     * @Then -a = vector(:x, :y, :z, :w)
      */
-    public function aVector($vector)
+    public function aVector(float $x, float $y, float $z, float $w)
     {
-        $this->tuple->negate();
-        $this->tupleEqualsArrayValues($vector);
+        Assertion::true($this->tuple->negate()->equalTo(Tuple::from($x, $y, $z, $w)));
     }
 
     /**
-     * @Then magnitude = :arg1
+     * @Then magnitude = :magnitudeExcepted
      */
-    public function magnitudeV($arg1)
+    public function magnitudeV(float $magnitudeExcepted)
     {
-        $arg1 = floatval($arg1);
-        $magnitude = $this->tuple->getMagnitude();
-        Assertion::same(true, Comparator::float($arg1, $magnitude));
+        Assertion::true(Comparator::float($this->tuple->getMagnitude(), $magnitudeExcepted));
     }
 
     /**
@@ -266,13 +255,13 @@ class TupleContext implements Context
     }
 
     /**
-     * @Then normalize = vector(:vector)
-     * @Then normalize = apprixomately vector(:vector)
+     * @Then normalize = vector(:x, :y, :z)
+     * @Then normalize = apprixomately vector(:x, :y, :z)
      */
-    public function normalizeVector(string $vector)
+    public function normalizeVector(float $x, float $y, float $z)
     {
-        $this->tuple->normalize();
-        $this->tupleEqualsArrayValues($vector);
+        $vectorExcepted = Tuple::vector($x, $y, $z);
+        Assertion::true($this->tuple->normalize()->equalTo($vectorExcepted));
     }
 
     /**
@@ -280,7 +269,7 @@ class TupleContext implements Context
      */
     public function normNormalizeV()
     {
-        $this->tuple->normalize();
+        $this->tuple = $this->tuple->normalize();
     }
 
     /**
@@ -408,7 +397,7 @@ class TupleContext implements Context
     /**
      * @Then c1 * c2 = (:color)
      */
-    public function cC($colorExcepted)
+    public function thenMultiplyColors($colorExcepted): void
     {
         $c1 = $this->colors[0];
         $c2 = $this->colors[1];
@@ -419,5 +408,13 @@ class TupleContext implements Context
         Assertion::same(true, Comparator::float($colorExcepted[0], $color->getRed()));
         Assertion::same(true, Comparator::float($colorExcepted[1], $color->getGreen()));
         Assertion::same(true, Comparator::float($colorExcepted[2], $color->getBlue()));
+    }
+
+    /**
+     * @When r <- reflect(:v, :n)
+     */
+    public function whenReflect(): void
+    {
+        $this->tuple = $this->tuple->reflect($this->tuple2);
     }
 }

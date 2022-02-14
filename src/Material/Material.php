@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace RayTracer\Material;
 
 use RayTracer\Color\Color;
+use RayTracer\Model\Tuple;
+use RayTracer\PointLight;
+use RayTracer\Shape\Shape;
+use RayTracer\Utils\Comparator;
 
 final class Material
 {
@@ -75,5 +79,62 @@ final class Material
     public function setShininess(float $shininess): void
     {
         $this->shininess = $shininess;
+    }
+
+    public function equalTo(self $that): bool
+    {
+        if (false === $this->color->equalTo($that->color())) {
+            return false;
+        }
+
+        if (false === Comparator::float($this->ambient, $that->ambient())) {
+            return false;
+        }
+
+        if (false === Comparator::float($this->diffuse, $that->diffuse())) {
+            return false;
+        }
+
+        if (false === Comparator::float($this->specular, $that->specular())) {
+            return false;
+        }
+
+        if (false === Comparator::float($this->shininess, $that->shininess())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function lighting(Shape $object, PointLight $light, Tuple $point, Tuple $eye, Tuple $normal, bool $inShadow): Color
+    {
+        $color = $this->color;
+
+        $effectiveColor = $color->product($light->intensity());
+        $ambient = $effectiveColor->multiplyBy($this->ambient);
+
+        if ($inShadow) {
+            return $ambient;
+        }
+
+        $lightv = $light->position()->minus($point)->normalize();
+        $light_dot_normal = $lightv->dot($normal);
+
+        if ($light_dot_normal < 0) {
+            $diffuse = Color::from(0, 0, 0);
+            $specular = Color::from(0, 0, 0);
+        } else {
+            $diffuse = $effectiveColor->multiplyBy($this->diffuse)->multiplyBy($light_dot_normal);
+            $reflect_dot_eye = $lightv->negate()->reflect($normal)->dot($eye);
+
+            if ($reflect_dot_eye <= 0) {
+                $specular = Color::from(0, 0, 0);
+            } else {
+                $factor = $reflect_dot_eye ** $this->shininess;
+                $specular = $light->intensity()->multiplyBy($this->specular * $factor);
+            }
+        }
+
+        return $ambient->plus($diffuse)->plus($specular);
     }
 }
