@@ -22,11 +22,11 @@ class ArrayConcatenationContext implements Context
     }
 
     /**
-     * @Given a <- array(:arg1)
+     * @Given a <- array(:arguments)
      */
-    public function aArray($arg1)
+    public function arrayCreation(string $arguments) : void
     {
-        $this->arrayConcatenation->add($this->stringToArray($arg1));
+        $this->arrayConcatenation->add($this->stringToArray($arguments));
     }
 
     /**
