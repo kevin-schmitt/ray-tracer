@@ -7,7 +7,7 @@ namespace RayTracer\Shape;
 final class ShapeCollection
 {
     /**
-     * @param $shapes array<Shape>
+     * @var array<Shape>
      */
     private array $shapes = [];
 
