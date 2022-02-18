@@ -20,7 +20,7 @@ class TupleContext implements Context
     use ArrayHelperTrait;
     private TupleInterface $tuple;
     private TupleInterface $tuple2;
-    private TupleInterface $tuple3;
+
     /**
      * @var array<Color>
      */
@@ -30,7 +30,7 @@ class TupleContext implements Context
      * @Given a <- Tuples(:tuples)
      * @Given a <- tuple(:tuples)
      */
-    public function aAffectationWithTuples(string $tuples)
+    public function tupleCreation(string $tuples) : void
     {
         $tupleArray = $this->stringToArrayFloat($tuples);
         $this->tuple = new Tuple(...$tupleArray);
@@ -40,7 +40,7 @@ class TupleContext implements Context
      * @Given p <- point(:tuple)
      * @Given p1 <- point(:tuple)
      */
-    public function pPoint($tuple)
+    public function pointCreation(string $tuple) : void
     {
         $tuple = sprintf('%s, %s', $tuple, '1');
         $tupleArray = $this->stringToArrayFloat($tuple);
@@ -50,7 +50,7 @@ class TupleContext implements Context
     /**
      * @Given p2 <- point(:tuple)
      */
-    public function p2Point($tuple)
+    public function point2Creation(string $tuple) : void
     {
         $tuple = sprintf('%s, %s', $tuple, '1');
         $tupleArray = $this->stringToArrayFloat($tuple);
@@ -64,7 +64,7 @@ class TupleContext implements Context
      * @Given v <- vector(:x, :y, :z)
      * @Given a <- vector(:x, :y, :z)
      */
-    public function givenVector(float $x, float $y, float $z)
+    public function vectorCreation(float $x, float $y, float $z) : void
     {
         $this->tuple = Tuple::vector($x, $y, $z);
     }
@@ -74,7 +74,7 @@ class TupleContext implements Context
      * @Given a1 <- tuple(:x, :y, :z, :w)
      * @Given a <- vector(:x, :y, :z, :w)
      */
-    public function givenVectorWithW(float $x, float $y, float $z, float $w): void
+    public function vectorCreationWithW(float $x, float $y, float $z, float $w): void
     {
         $this->tuple = TupleFactory::create($x, $y, $z, $w);
     }
@@ -84,7 +84,7 @@ class TupleContext implements Context
      * @Given b <- vector(:x, :y, :z)
      * @Given n <- vector(:x, :y, :z)
      */
-    public function vectorTupleV2(float $x, float $y, float $z)
+    public function vector2Creation(float $x, float $y, float $z) : void
     {
         $this->tuple2 = Tuple::vector($x, $y, $z);
     }
@@ -92,7 +92,7 @@ class TupleContext implements Context
     /**
      * @Given a2 <- tuple(:tuple)
      */
-    public function aTuple2($tuple)
+    public function tuple2Creation(string $tuple) : void
     {
         $this->tuple2 = TupleFactory::create(...$this->stringToArrayFloat($tuple));
     }
@@ -100,7 +100,7 @@ class TupleContext implements Context
     /**
      * @Then a1 + a2  = tuple(:tuple)
      */
-    public function additionTuple(string $tuple)
+    public function additionTuple(string $tuple) : void
     {
         $this->tuple->add($this->tuple2);
         $this->tupleEqualsArrayValues($tuple);
@@ -110,7 +110,7 @@ class TupleContext implements Context
      * @Then p1 - p2 = vector(:vector)
      * @Then zero - v2 = vector(:vector)
      */
-    public function substrEqualTo($vector)
+    public function substrEqualTo(string $vector) : void
     {
         $this->tuple->substr($this->tuple2);
         $vector = sprintf('%s, %s', $vector, 0);
@@ -120,7 +120,7 @@ class TupleContext implements Context
     /**
      * @Then v1 - v2 = point(:point)
      */
-    public function substrPoinrEqualTo($point)
+    public function substrPoinrEqualTo(string $point) : void
     {
         $this->tuple->substr($this->tuple2);
         $point = sprintf('%s, %s', $point, 0);
@@ -130,7 +130,7 @@ class TupleContext implements Context
     /**
      * @Then v1 - p2 = point(:point)
      */
-    public function p1SubstrP2EqualToPoint(string $point)
+    public function p1SubstrP2EqualToPoint(string $point) : void
     {
         $this->tuple->substr($this->tuple2);
         $point = sprintf('%s, %s', $point, 1);
@@ -140,7 +140,7 @@ class TupleContext implements Context
     /**
      * @Then p = tuple(:tuple)
      */
-    public function tupleEqualsArrayValues(string $tuple)
+    public function tupleEqualsArrayValues(string $tuple) : void
     {
         $tupleArray = $this->stringToArrayFloat($tuple);
         Assertion::same(true, Comparator::float($this->tuple->getX(), $tupleArray[0]));
@@ -155,7 +155,7 @@ class TupleContext implements Context
     /**
      * @Then a.x=:x
      */
-    public function aEqualToX(float $x)
+    public function aEqualToX(float $x) : void
     {
         Assertion::eq($x, $this->tuple->getX());
     }
@@ -163,7 +163,7 @@ class TupleContext implements Context
     /**
      * @Then a.y=:y
      */
-    public function aEqualToY(float $y)
+    public function aEqualToY(float $y) : void
     {
         Assertion::eq($y, $this->tuple->getY());
     }
@@ -171,7 +171,7 @@ class TupleContext implements Context
     /**
      * @Then a.z=:z
      */
-    public function aEqualToZ(float $z)
+    public function aEqualToZ(float $z) : void
     {
         Assertion::eq($z, $this->tuple->getZ());
     }
@@ -179,7 +179,7 @@ class TupleContext implements Context
     /**
      * @Then a.w=:w
      */
-    public function aIsEqualToW(float $w)
+    public function aIsEqualToW(float $w) : void
     {
         Assertion::eq($w, $this->tuple->getW());
     }
@@ -187,7 +187,7 @@ class TupleContext implements Context
     /**
      * @Then a is a point
      */
-    public function aIsAPoint()
+    public function aIsAPoint() : void
     {
         Assertion::eq($this->tuple->getType(), 'point');
     }
@@ -195,7 +195,7 @@ class TupleContext implements Context
     /**
      * @Then a is not a vector
      */
-    public function aIsNotAVector()
+    public function aIsNotAVector() : void
     {
         Assertion::notEq($this->tuple->getType(), 'vector');
     }
@@ -203,7 +203,7 @@ class TupleContext implements Context
     /**
      * @Then a is a vector
      */
-    public function aIsAVector()
+    public function aIsAVector() : void
     {
         Assertion::eq($this->tuple->getType(), 'vector');
     }
@@ -211,7 +211,7 @@ class TupleContext implements Context
     /**
      * @Then a is not a point
      */
-    public function aIsNotAPoint()
+    public function aIsNotAPoint() : void
     {
         Assertion::notEq($this->tuple->getType(), 'point');
     }
@@ -219,7 +219,7 @@ class TupleContext implements Context
     /**
      * @Then -a = vector(:x, :y, :z, :w)
      */
-    public function aVector(float $x, float $y, float $z, float $w)
+    public function aVector(float $x, float $y, float $z, float $w) : void
     {
         Assertion::true($this->tuple->negate()->equalTo(Tuple::from($x, $y, $z, $w)));
     }
@@ -227,7 +227,7 @@ class TupleContext implements Context
     /**
      * @Then magnitude = :magnitudeExcepted
      */
-    public function magnitudeV(float $magnitudeExcepted)
+    public function magnitudeV(float $magnitudeExcepted) : void
     {
         Assertion::true(Comparator::float($this->tuple->getMagnitude(), $magnitudeExcepted));
     }
@@ -235,10 +235,8 @@ class TupleContext implements Context
     /**
      * @Then a * :coef = tuple(:tuple)
      */
-    public function thenAMultiplyToCoefEqualsTo($coef, $tuple)
+    public function thenAMultiplyToCoefEqualsTo(float $coef, string $tuple) : void
     {
-        $coef = floatval($coef);
-
         $tuple = TupleFactory::create(...$this->stringToArrayFloat($tuple));
         Assertion::true($this->tuple->multiplyBy($coef)->equalTo($tuple));
     }
@@ -246,10 +244,8 @@ class TupleContext implements Context
     /**
      * @Then a \/ :coef = tuple(:tuple)
      */
-    public function aTuple3($coef, $tuple)
+    public function aTuple3(float $coef, string $tuple) : void
     {
-        $coef = floatval($coef);
-
         $this->tuple->dividingBy($coef);
         $this->tupleEqualsArrayValues($tuple);
     }
@@ -258,7 +254,7 @@ class TupleContext implements Context
      * @Then normalize = vector(:x, :y, :z)
      * @Then normalize = apprixomately vector(:x, :y, :z)
      */
-    public function normalizeVector(float $x, float $y, float $z)
+    public function normalizeVector(float $x, float $y, float $z) : void
     {
         $vectorExcepted = Tuple::vector($x, $y, $z);
         Assertion::true($this->tuple->normalize()->equalTo($vectorExcepted));
@@ -267,7 +263,7 @@ class TupleContext implements Context
     /**
      * @When norm <- normalize
      */
-    public function normNormalizeV()
+    public function normNormalizeV() : void
     {
         $this->tuple = $this->tuple->normalize();
     }
@@ -275,24 +271,16 @@ class TupleContext implements Context
     /**
      * @Then dot = :value
      */
-    public function dot($dotExcepted)
+    public function dot(float $dotExcepted) : void
     {
         $dot = $this->tuple->dot($this->tuple2);
-        Assertion::same(true, Comparator::float(floatval($dotExcepted), $dot));
-    }
-
-    /**
-     * @Then cross(:arg1) = vector(:arg2)
-     */
-    public function crossVector($arg1, $arg2)
-    {
-        throw new PendingException();
+        Assertion::same(true, Comparator::float($dotExcepted, $dot));
     }
 
     /**
      * @Then cross for a, b = vector(:vector)
      */
-    public function crossForABVector($vector)
+    public function crossForABVector(string $vector) : void
     {
         $vectorCrossed = $this->tuple->cross($this->tuple2);
         $tupleArray = $this->stringToArrayFloat($vector);
@@ -304,7 +292,7 @@ class TupleContext implements Context
     /**
      * @Then cross for b, a = vector(:vector)
      */
-    public function crossForBAVector($vector)
+    public function crossForBAVector(string $vector) : void
     {
         $vectorCrossed = $this->tuple2->cross($this->tuple);
         $tupleArray = $this->stringToArrayFloat($vector);
@@ -318,7 +306,7 @@ class TupleContext implements Context
      * @Given c1 = color(:arg1)
      * @Given c2 = color(:arg1)
      */
-    public function color(string $colors)
+    public function color(string $colors) : void
     {
         $this->colors[] = new Color(...$this->stringToArray($colors));
     }
@@ -326,7 +314,7 @@ class TupleContext implements Context
     /**
      * @Then c.red = :color
      */
-    public function cRed($color)
+    public function colorRedEqualTo(float $color) : void
     {
         Assertion::eq($this->colors[0]->getRed(), $color);
     }
@@ -334,7 +322,7 @@ class TupleContext implements Context
     /**
      * @Then c.green = :color
      */
-    public function cGreen($color)
+    public function colorGreenEqualTo(float $color) : void
     {
         Assertion::eq($this->colors[0]->getGreen(), $color);
     }
@@ -342,7 +330,7 @@ class TupleContext implements Context
     /**
      * @Then c.blue = :color
      */
-    public function cBlue($color)
+    public function colorBlueEqualTo(float $color) : void
     {
         Assertion::eq($this->colors[0]->getBlue(), $color);
     }
@@ -350,7 +338,7 @@ class TupleContext implements Context
     /**
      * @Then c1 + c2 = (:color)
      */
-    public function addingColor($colorExcepted)
+    public function addingColor(string $colorExcepted) : void
     {
         $c1 = $this->colors[0];
         $c2 = $this->colors[1];
@@ -366,7 +354,7 @@ class TupleContext implements Context
     /**
      * @Then c1 - c2 = (:color)
      */
-    public function cC2($colorExcepted)
+    public function cC2(string $colorExcepted) : void
     {
         $c1 = $this->colors[0];
         $c2 = $this->colors[1];
@@ -382,11 +370,11 @@ class TupleContext implements Context
     /**
      * @Then c * :coef = (:colorExcepted)
      */
-    public function c($coef, $colorExcepted)
+    public function c(float $coef, string $colorExcepted) : void
     {
         $c1 = $this->colors[0];
 
-        $color = (new ColorCalculator())->multipliyingByCoef($c1, floatval($coef));
+        $color = (new ColorCalculator())->multipliyingByCoef($c1, $coef);
         $colorExcepted = $this->stringToArray($colorExcepted);
 
         Assertion::same(true, Comparator::float($colorExcepted[0], $color->getRed()));
@@ -395,9 +383,9 @@ class TupleContext implements Context
     }
 
     /**
-     * @Then c1 * c2 = (:color)
+     * @Then c1 * c2 = (:colorExcepted)
      */
-    public function thenMultiplyColors($colorExcepted): void
+    public function thenMultiplyColors(string $colorExcepted): void
     {
         $c1 = $this->colors[0];
         $c2 = $this->colors[1];

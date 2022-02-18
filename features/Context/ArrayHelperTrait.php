@@ -14,7 +14,7 @@ trait ArrayHelperTrait
     private function stringToArrayFloat(string $valueWithComaSeparator): array
     {
         return array_map(function (string $value) {
-            return floatval(trim($value));
+            return floatval(preg_replace("/[^0-9\.-]/", "", $value));
         }, explode(',', $valueWithComaSeparator));
     }
 

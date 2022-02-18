@@ -33,4 +33,6 @@ interface TupleInterface
     public function cross(TupleInterface $tuple): TupleInterface;
 
     public function equalTo(self $that): bool;
+
+    public function reflect(TupleInterface $normal) : TupleInterface;
 }

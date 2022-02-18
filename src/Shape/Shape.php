@@ -38,9 +38,11 @@ abstract class Shape
         return $this->transform;
     }
 
-    public function setTransform(Matrix $transform): void
+    public function setTransform(Matrix $transform): self
     {
         $this->transform = $transform;
+
+        return $this;
     }
 
     public function normalAt(Tuple $worldPoint): Tuple
@@ -63,4 +65,5 @@ abstract class Shape
     }
 
     abstract public function localNormalAt(Tuple $point): Tuple;
+    abstract public function equalTo(self $that) : bool;
 }

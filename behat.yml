@@ -1,4 +1,6 @@
 default:
+    gherkin:
+        cache: ~
     suites:
         default:
             contexts:
