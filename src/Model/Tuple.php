@@ -188,7 +188,7 @@ class Tuple implements TupleInterface
     /**
      * @throws RuntimeException
      */
-    public function reflect(self $normal): self
+    public function reflect(TupleInterface $normal): TupleInterface
     {
         return $this->minus($normal->multiplyBy(2 * $this->dot($normal)));
     }

@@ -75,12 +75,12 @@ class RayContext implements Context
     /**
      * @Given r <- point(:pointX, :pointY, :pointZ) vector(:vectorX, :vectorY, :vectorZ)
      */
-    public function rayInitialisation(
+    public function rayCreation(
         float $pointX, float $pointY, float $pointZ, float $vectorX, float $vectorY, float $vectorZ
-    ) {
+    ): void {
         $this->rays[] = Ray::from(
-            Tuple::from($pointX, $pointY, $pointZ, TypeTuple::POINT),
-            Tuple::from($vectorX, $vectorY, $vectorZ, TypeTuple::VECTOR)
+            Tuple::point($pointX, $pointY, $pointZ),
+            Tuple::vector($vectorX, $vectorY, $vectorZ)
         );
     }
 

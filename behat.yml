@@ -1,4 +1,6 @@
 default:
+    gherkin:
+        cache: ~
     suites:
         default:
             contexts:
@@ -15,7 +17,15 @@ default:
         material:
             contexts:
                 - RayTracer\Tests\Context\MaterialContext
-            paths: [ '%paths.base%/features/materials' ]
+            paths: [ '%paths.base%/features/material' ]
+        intersection:
+            contexts:
+                - RayTracer\Tests\Context\Intersection\IntersectionContext
+            paths: [ '%paths.base%/features/intersection' ]
+        world:
+            contexts:
+                - RayTracer\Tests\Context\WorldContext
+            paths: [ '%paths.base%/features/world' ]
         puttingit_together:
             contexts:
                 - RayTracer\Tests\Context\PuttingTogetherContext
