@@ -9,7 +9,7 @@ use RayTracer\PointLight;
 /**
  *  @require pointLight property
  */
-trait PointLightGerkin 
+trait PointLightGerkin
 {
     /**
      * @When light <- point_light(point(:x, :y, :z), color(:red, :green, :blue))

@@ -28,13 +28,13 @@ final class PointLight
         return $this->position;
     }
 
-    public function equalTo(PointLight $that) : bool
+    public function equalTo(PointLight $that): bool
     {
-        if(false === $that->intensity()->equalTo($this->intensity())) {
+        if (false === $that->intensity()->equalTo($this->intensity())) {
             return false;
         }
 
-        if(false === $that->position()->equalTo($this->position())) {
+        if (false === $that->position()->equalTo($this->position())) {
             return false;
         }
 

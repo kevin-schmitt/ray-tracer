@@ -34,5 +34,5 @@ interface TupleInterface
 
     public function equalTo(self $that): bool;
 
-    public function reflect(TupleInterface $normal) : TupleInterface;
+    public function reflect(TupleInterface $normal): TupleInterface;
 }

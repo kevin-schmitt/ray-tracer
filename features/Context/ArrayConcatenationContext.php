@@ -24,32 +24,32 @@ class ArrayConcatenationContext implements Context
     /**
      * @Given a <- array(:arguments)
      */
-    public function arrayCreation(string $arguments) : void
+    public function arrayCreation(string $arguments): void
     {
         $this->arrayConcatenation->add($this->stringToArray($arguments));
     }
 
     /**
-     * @Given b <- array(:arg1)
+     * @Given b <- array(:stringArray)
      */
-    public function bArray($arg1)
+    public function bArray(string $stringArray): void
     {
-        $this->arrayConcatenation->add($this->stringToArray($arg1));
+        $this->arrayConcatenation->add($this->stringToArray($stringArray));
     }
 
     /**
      * @When c <- a + b
      */
-    public function cAB()
+    public function cAB(): void
     {
     }
 
     /**
-     * @Then c = array(:arg1)
+     * @Then c = array(:stringArray)
      */
-    public function cArray($arg1)
+    public function cArray(string $stringArray): void
     {
-        $arg1 = $this->stringToArray($arg1);
-        Assertion::eq($arg1, $this->arrayConcatenation->concat());
+        $excepted = $this->stringToArray($stringArray);
+        Assertion::eq($excepted, $this->arrayConcatenation->concat());
     }
 }

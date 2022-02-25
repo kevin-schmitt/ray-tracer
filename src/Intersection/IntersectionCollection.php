@@ -87,4 +87,14 @@ final class IntersectionCollection
         //@phpstan-ignore-next-line
         return $this->hit;
     }
+
+    public function merge(self $that): self
+    {
+        return self::from(
+            ...array_merge(
+                $this->intersections,
+                $that->asArray()
+            )
+        );
+    }
 }

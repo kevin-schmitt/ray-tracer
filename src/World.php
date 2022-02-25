@@ -6,7 +6,9 @@ namespace RayTracer;
 
 use RayTracer\Color\Color;
 use Raytracer\Exception\WorldHasNoLightException;
+use RayTracer\Intersection\IntersectionCollection;
 use RayTracer\Material\Material;
+use RayTracer\Math\Ray;
 use RayTracer\Math\Transformation;
 use RayTracer\Model\Tuple;
 use RayTracer\Shape\Shape;
@@ -23,16 +25,16 @@ final class World
         $this->shapes = new ShapeCollection();
     }
 
-    public function shapes() : ShapeCollection
+    public function shapes(): ShapeCollection
     {
         return $this->shapes;
     }
 
-    public function light() : PointLight
+    public function light(): PointLight
     {
-        if(null === $this->light) {
+        if (null === $this->light) {
             // @todo to fix not found
-            throw new WorldHasNoLightException;
+            throw new WorldHasNoLightException();
         }
 
         return $this->light;
@@ -51,7 +53,7 @@ final class World
         $s2 = Sphere::default();
         $s2->setTransform(Transformation::scaling(0.5, 0.5, 0.5));
 
-        $w = new self;
+        $w = new self();
 
         $w->add($s1);
         $w->add($s2);
@@ -68,5 +70,16 @@ final class World
     public function setLight(PointLight $light): void
     {
         $this->light = $light;
+    }
+
+    public function intersect(Ray $ray): IntersectionCollection
+    {
+        $intersections = IntersectionCollection::from();
+
+        foreach ($this->shapes as $shape) {
+            $intersections = $intersections->merge($shape->intersect($ray));
+        }
+
+        return $intersections;
     }
 }

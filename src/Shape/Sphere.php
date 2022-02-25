@@ -82,13 +82,13 @@ final class Sphere extends Shape
         return Tuple::vector($point->getX(), $point->getY(), $point->getZ());
     }
 
-    public function equalTo(Shape $that) : bool
+    public function equalTo(Shape $that): bool
     {
-        if(false === $this->transform->equalTo($that->transform())) {
+        if (false === $this->transform->equalTo($that->transform())) {
             return false;
         }
 
-        if(false === $this->material->equalTo($that->material())) {
+        if (false === $this->material->equalTo($that->material())) {
             return false;
         }
 

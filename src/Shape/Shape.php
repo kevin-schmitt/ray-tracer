@@ -65,5 +65,6 @@ abstract class Shape
     }
 
     abstract public function localNormalAt(Tuple $point): Tuple;
-    abstract public function equalTo(self $that) : bool;
+
+    abstract public function equalTo(self $that): bool;
 }

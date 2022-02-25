@@ -17,7 +17,11 @@ default:
         material:
             contexts:
                 - RayTracer\Tests\Context\MaterialContext
-            paths: [ '%paths.base%/features/materials' ]
+            paths: [ '%paths.base%/features/material' ]
+        intersection:
+            contexts:
+                - RayTracer\Tests\Context\Intersection\IntersectionContext
+            paths: [ '%paths.base%/features/intersection' ]
         world:
             contexts:
                 - RayTracer\Tests\Context\WorldContext
